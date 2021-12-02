@@ -260,7 +260,13 @@ def are_different(first, second, tolerance, absolute_tolerance=None):
     are different.
     In all other cases, the difference is straight forward.
     """
-    if first == second:
+    is_same = first == second
+
+    # handles cases where NA propogates. pd.NA being the prime example.
+    if not isinstance(is_same, bool):
+        return first is not second
+
+    if is_same:
         # values are same - simple case
         return False
 
